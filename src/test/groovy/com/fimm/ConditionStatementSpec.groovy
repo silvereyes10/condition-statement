@@ -1,6 +1,6 @@
 package com.fimm
 
-import com.fimm.model.JavaBeanForTest
+import com.fimm.test.JavaBeanForTest
 import org.apache.commons.collections.MapUtils
 import org.apache.commons.lang3.StringUtils
 import spock.lang.Specification
