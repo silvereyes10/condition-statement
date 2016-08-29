@@ -12,18 +12,8 @@ public class ConditionStatement {
         return condition.check(source);
     }
 
-    public static Condition hasEntry(String entryKey) {
-        return new Condition() {
-            @Override
-            public Class[] getCompatibleClasses() {
-                return new Class[]{Map.class};
-            }
-
-            @Override
-            public boolean test(Object source) {
-                return ((Map) source).get(entryKey) != null;
-            }
-        };
+    public static MapCondition hasEntry(String entryKey) {
+        return source -> ((Map) source).get(entryKey) != null;
     }
 
     public static Condition hasProperty(String propertyName) {
@@ -68,46 +58,16 @@ public class ConditionStatement {
         return source -> true;
     }
 
-    public static Condition isContainedIn(List<String> list) {
-        return new Condition() {
-            @Override
-            public Class[] getCompatibleClasses() {
-                return new Class[]{String.class};
-            }
-
-            @Override
-            public boolean test(Object source) {
-                return list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString)));
-            }
-        };
+    public static StringCondition isContainedIn(List<String> list) {
+        return source -> list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString)));
     }
 
-    public static Condition isNotContainedIn(List<String> list) {
-        return new Condition() {
-            @Override
-            public Class[] getCompatibleClasses() {
-                return new Class[]{String.class};
-            }
-
-            @Override
-            public boolean test(Object source) {
-                return list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString))) == false;
-            }
-        };
+    public static StringCondition isNotContainedIn(List<String> list) {
+        return source -> list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString))) == false;
     }
 
-    public static Condition entry(String entryKey, Condition condition) {
-        return new Condition() {
-            @Override
-            public Class[] getCompatibleClasses() {
-                return new Class[]{Map.class};
-            }
-
-            @Override
-            public boolean test(Object source) {
-                return condition.check(((Map) source).get(entryKey));
-            }
-        };
+    public static MapCondition entry(String entryKey, Condition condition) {
+        return source -> condition.check(((Map) source).get(entryKey));
     }
 
     public static Condition property(String propertyName, Condition condition) {

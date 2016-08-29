@@ -1,5 +1,6 @@
 package com.fimm;
 
+import com.fimm.test.JavaBeanForTest;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
@@ -13,27 +14,6 @@ import static org.junit.Assert.assertThat;
  * @author fimm(seo.seokho_nhn.com)
  */
 public class ConditionStatementTest {
-    public class JavaBeanForTest {
-        private String propertyString;
-        private Integer propertyInteger;
-
-        public String getPropertyString() {
-            return propertyString;
-        }
-
-        public void setPropertyString(String propertyString) {
-            this.propertyString = propertyString;
-        }
-
-        public Integer getPropertyInteger() {
-            return propertyInteger;
-        }
-
-        public void setPropertyInteger(Integer propertyInteger) {
-            this.propertyInteger = propertyInteger;
-        }
-    }
-
     @Test
     // 조건 확인 대상이 Map 인 경우 entry 관련 구문을 사용할 수 있다.
     public void test2() throws Exception {
