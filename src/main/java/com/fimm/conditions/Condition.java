@@ -1,14 +1,16 @@
-package com.fimm;
+package com.fimm.conditions;
 
-import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import com.fimm.ConditionStatementException;
 
 /**
  * @author fimm(seo.seokho_nhn.com)
  */
 @FunctionalInterface
 public interface Condition {
-    Class[] ALL = null;
+    @SuppressWarnings("rawtypes")
+	Class[] ALL = null;
 
     boolean test(Object source);
 
@@ -30,7 +32,8 @@ public interface Condition {
     /**
      * 호환되는 클래스를 지정하기 위한 메소드. 재정의되지 않으면 항상 호환가능 한 상태로 본다.
      */
-    default Class[] getCompatibleClasses() {
+    @SuppressWarnings("rawtypes")
+	default Class[] getCompatibleClasses() {
         return ALL;
     }
 }

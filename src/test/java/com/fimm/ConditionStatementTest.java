@@ -1,14 +1,23 @@
 package com.fimm;
 
-import com.fimm.test.JavaBeanForTest;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
+import static com.fimm.ConditionStatement.and;
+import static com.fimm.ConditionStatement.does;
+import static com.fimm.ConditionStatement.entry;
+import static com.fimm.ConditionStatement.eq;
+import static com.fimm.ConditionStatement.hasEntry;
+import static com.fimm.ConditionStatement.hasProperty;
+import static com.fimm.ConditionStatement.is;
+import static com.fimm.ConditionStatement.property;
+import static org.junit.Assert.assertThat;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.fimm.ConditionStatement.*;
-import static org.junit.Assert.assertThat;
+import org.hamcrest.CoreMatchers;
+import org.junit.Test;
+
+import com.fimm.conditions.Condition;
+import com.fimm.test.JavaBeanForTest;
 
 /**
  * @author fimm(seo.seokho_nhn.com)
@@ -49,6 +58,10 @@ public class ConditionStatementTest {
         assertThat(does(javabean, property("propertyInteger", is("100"))), CoreMatchers.is(true));
         assertThat(does(javabean, hasProperty("propertyString")), CoreMatchers.is(true));
         assertThat(does(javabean, hasProperty("propertyInteger")), CoreMatchers.is(true));
+    }
+    
+    @Test
+    public void test4() throws Exception {
     }
 
     public enum Member implements Condition {

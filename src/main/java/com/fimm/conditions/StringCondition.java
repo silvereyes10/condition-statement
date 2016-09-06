@@ -1,4 +1,4 @@
-package com.fimm;
+package com.fimm.conditions;
 
 /**
  * @author fimm(seo.seokho_nhn.com)
