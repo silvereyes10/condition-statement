@@ -14,15 +14,59 @@ import java.util.Map;
 interface ConditionStatement {
     static final String NO_COMPATIBLE_SOURCE = "지원하지 않습니다.";
 
-    public static boolean does(Object source, Condition condition) {
+    static boolean does(Object source, Condition condition) {
         return condition.check(source);
     }
     
-    public static boolean is(Object source, Condition condition) {
+    static boolean is(Object source, Condition condition) {
     	return condition.check(source);
     }
 
-    public static Condition hasProperty(String propertyName) {
+    static Condition eq(Object object) {
+        return source -> source.equals(object);
+    }
+
+    static Condition is(Object object) {
+        return eq(object);
+    }
+
+    static Condition isNull() {
+        return source -> source == null;
+    }
+
+     static Condition isIn(Object... compareObjects) {
+        return object -> Arrays.stream(compareObjects).anyMatch(source -> source.equals(object));
+    }
+
+     static Condition isNotIn(Object... compareObjects) {
+        return object -> Arrays.stream(compareObjects).noneMatch(source -> source.equals(object));
+    }
+
+     static Condition and(Condition... conditions) {
+        return source -> Arrays.stream(conditions).allMatch(condition -> condition.test(source));
+    }
+
+     static Condition or(Condition... conditions) {
+        return source -> Arrays.stream(conditions).anyMatch(condition -> condition.test(source));
+    }
+
+     static Condition all() {
+        return source -> true;
+    }
+
+     static StringCondition isContainedIn(List<String> list) {
+        return source -> list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString)));
+    }
+
+     static StringCondition isNotContainedIn(List<String> list) {
+        return source -> list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString))) == false;
+    }
+    
+	 static StringCondition empty() {
+		return source -> StringUtils.isEmpty((String) source);
+	}
+
+     static Condition hasProperty(String propertyName) {
         return source -> {
             try {
                 return (BeanUtils.getProperty(source, propertyName) != null);
@@ -32,51 +76,7 @@ interface ConditionStatement {
         };
     }
 
-    public static Condition eq(Object object) {
-        return source -> source.equals(object);
-    }
-
-    public static Condition is(Object object) {
-        return eq(object);
-    }
-
-    public static Condition isNull() {
-        return source -> source == null;
-    }
-
-    public static Condition isIn(Object... compareObjects) {
-        return object -> Arrays.stream(compareObjects).anyMatch(source -> source.equals(object));
-    }
-
-    public static Condition isNotIn(Object... compareObjects) {
-        return object -> Arrays.stream(compareObjects).noneMatch(source -> source.equals(object));
-    }
-
-    public static Condition and(Condition... conditions) {
-        return source -> Arrays.stream(conditions).allMatch(condition -> condition.test(source));
-    }
-
-    public static Condition or(Condition... conditions) {
-        return source -> Arrays.stream(conditions).anyMatch(condition -> condition.test(source));
-    }
-
-    public static Condition all() {
-        return source -> true;
-    }
-
-    public static StringCondition isContainedIn(List<String> list) {
-        return source -> list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString)));
-    }
-
-    public static StringCondition isNotContainedIn(List<String> list) {
-        return source -> list.stream().anyMatch(compareString -> (StringUtils.equals((String) source, compareString))) == false;
-    }
-    
-	public static StringCondition empty() {
-		return source -> StringUtils.isEmpty((String) source);
-	}
-
-    public static Condition property(String propertyName, Condition condition) {
+     static Condition property(String propertyName, Condition condition) {
         return source -> {
             try {
                 return condition.check(BeanUtils.getProperty(source, propertyName));
@@ -86,15 +86,15 @@ interface ConditionStatement {
         };
     }
     
-    public static MapCondition hasEntry(String entryKey) {
+     static MapCondition hasEntry(String entryKey) {
     	return source -> ((Map<?, ?>) source).get(entryKey) != null;
     }
     
-    public static MapCondition entry(String entryKey, Condition condition) {
+     static MapCondition entry(String entryKey, Condition condition) {
         return source -> condition.check(((Map<?, ?>) source).get(entryKey));
     }
     
-	public static ListCondition firstData(Condition condition) {
+	 static ListCondition firstData(Condition condition) {
     	return source -> condition.check(((List<?>)source).get(0));
     }
 }

@@ -18,7 +18,7 @@ jar {
     baseName = 'condition-statement'
     appendix = 'bin'
     version = '0.99'
-    classifier = 'jdk8'
+    //classifier = 'jdk8'
 
     // archiveName = 'example.jar'
 }
