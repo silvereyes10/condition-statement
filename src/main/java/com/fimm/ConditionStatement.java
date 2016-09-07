@@ -1,19 +1,18 @@
 package com.fimm;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import com.fimm.conditions.Condition;
 import com.fimm.conditions.ListCondition;
 import com.fimm.conditions.MapCondition;
 import com.fimm.conditions.StringCondition;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 interface ConditionStatement {
-    public static final String NO_COMPATIBLE_SOURCE = "지원하지 않습니다.";
+    static final String NO_COMPATIBLE_SOURCE = "지원하지 않습니다.";
 
     public static boolean does(Object source, Condition condition) {
         return condition.check(source);
@@ -28,7 +27,7 @@ interface ConditionStatement {
             try {
                 return (BeanUtils.getProperty(source, propertyName) != null);
             } catch (Exception e) {
-                throw new ConditionStatementException("지원하지 않습니다.", e);
+                throw new ConditionStatementException(NO_COMPATIBLE_SOURCE, e);
             }
         };
     }
