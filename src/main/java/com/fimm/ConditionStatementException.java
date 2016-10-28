@@ -5,6 +5,7 @@ package com.fimm;
  */
 public class ConditionStatementException extends RuntimeException {
     public ConditionStatementException() {
+        // tetes
     }
 
     public ConditionStatementException(String message) {
